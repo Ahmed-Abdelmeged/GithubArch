@@ -1,0 +1,93 @@
+apply plugin: 'com.android.application'
+
+android {
+    def androidVersions = rootProject.ext.android
+
+    compileSdkVersion androidVersions.compileSdkVersion
+    defaultConfig {
+        applicationId "com.ahmedabdelmeged.githubarch"
+        minSdkVersion androidVersions.minSdkVersion
+        targetSdkVersion androidVersions.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        resConfigs "ar", "en"
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    def commonDependencies = rootProject.ext.commonDependencies
+    def commonTestDependencies = rootProject.ext.commonTestDependencies
+
+    //Android
+    implementation commonDependencies.supportAppCompatV7
+    implementation commonDependencies.constraintLayout
+    implementation commonDependencies.supportRecyclerView
+    implementation commonDependencies.supportCardView
+
+    //AutoValue
+    compileOnly commonDependencies.autoValue
+    annotationProcessor commonDependencies.autoValue
+
+    // AutoValue Type Adapter
+    compileOnly commonDependencies.autoValueGsonAnnotation
+    annotationProcessor commonDependencies.autoValueGson
+
+    //Timber for logging
+    implementation commonDependencies.timber
+
+    //RxJava 2
+    implementation commonDependencies.rxJava2
+    implementation commonDependencies.rxAndroid
+
+    //Networking Retrofit
+    implementation commonDependencies.retrofit2
+    implementation commonDependencies.retrofitRxAdapter
+    implementation commonDependencies.retrofitConverter
+
+    //Android architecture components
+    implementation commonDependencies.archLifecycleExtensions
+    implementation commonDependencies.archPaging
+
+    //Networking
+    implementation commonDependencies.okHttp
+    implementation commonDependencies.okHttpInterceptor
+
+    //Dagger for dependency injection
+    implementation commonDependencies.dagger
+    implementation commonDependencies.daggerAndroid
+    implementation commonDependencies.daggerAndroidSupport
+    annotationProcessor commonDependencies.daggerAnnotation
+    annotationProcessor commonDependencies.daggerCompiler
+
+    //Glide
+    implementation commonDependencies.glide
+    annotationProcessor commonDependencies.glideCompiler
+
+    //Unit testing
+    testImplementation commonTestDependencies.junit
+    testImplementation commonTestDependencies.assertj
+    testImplementation commonTestDependencies.mockito
+
+    //Instrumentation
+    androidTestImplementation commonTestDependencies.testRunner
+    androidTestImplementation commonTestDependencies.espresso
+
+}
