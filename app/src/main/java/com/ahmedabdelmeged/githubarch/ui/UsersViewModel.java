@@ -3,9 +3,11 @@ package com.ahmedabdelmeged.githubarch.ui;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.arch.paging.LivePagedListBuilder;
 import android.arch.paging.PagedList;
 import android.support.annotation.NonNull;
 
+import com.ahmedabdelmeged.githubarch.data.GitHubUserDataSourceFactory;
 import com.ahmedabdelmeged.githubarch.data.UserRepository;
 import com.ahmedabdelmeged.githubarch.model.User;
 
@@ -30,23 +32,26 @@ public class UsersViewModel extends ViewModel {
     @NonNull
     private final MutableLiveData<List<User>> usersLiveData = new MutableLiveData<>();
 
-
-
-    private LiveData<PagedList<User>> usersPagedLiveData;
-
-
-
     @NonNull
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    /***
-     * The last user id in the fetched list to get on the next page
-     */
-    private long lastUserId;
+    public LiveData<PagedList<User>> userList;
+
+    private static final int pageSize = 15;
 
     @Inject
     UsersViewModel(@NonNull UserRepository userRepository) {
         this.userRepository = userRepository;
+        // compositeDisposable.add(getUsers());
+        GitHubUserDataSourceFactory gitHubUserDataSourceFactory = new GitHubUserDataSourceFactory(userRepository, compositeDisposable);
+
+        PagedList.Config config = new PagedList.Config.Builder()
+                .setPageSize(pageSize)
+                .setInitialLoadSizeHint(pageSize * 2)
+                .setEnablePlaceholders(false)
+                .build();
+
+        userList = new LivePagedListBuilder<>(gitHubUserDataSourceFactory, config).build();
         compositeDisposable.add(getUsers());
     }
 
@@ -64,28 +69,7 @@ public class UsersViewModel extends ViewModel {
     @NonNull
     private Disposable getUsers() {
         return userRepository.fetchUsers()
-                .subscribe(this::postApiValue, throwable -> Timber.e(throwable.getMessage()));
+                .subscribe(usersLiveData::postValue, throwable -> Timber.e(throwable.getMessage()));
     }
-
-    public void loadNextPage() {
-        compositeDisposable.add(userRepository.fetchNextPageUsers(lastUserId)
-                .subscribe(this::postApiValue, throwable -> Timber.e(throwable.getMessage())));
-    }
-
-    private void postApiValue(List<User> users) {
-        getLastUserId(users);
-        usersLiveData.postValue(users);
-    }
-
-    private void getLastUserId(List<User> users) {
-        try {
-            lastUserId = users.get(users.size() - 1).id();
-        } catch (IndexOutOfBoundsException e) {
-            Timber.e(e.getMessage());
-        }
-    }
-
-
-
 
 }

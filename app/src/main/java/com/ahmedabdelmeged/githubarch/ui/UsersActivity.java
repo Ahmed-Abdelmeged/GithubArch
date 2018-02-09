@@ -5,16 +5,16 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import com.ahmedabdelmeged.githubarch.R;
 import com.ahmedabdelmeged.githubarch.adapter.UserAdapter;
-import com.ahmedabdelmeged.githubarch.common.AutoCompositeDisposable;
+import com.ahmedabdelmeged.githubarch.adapter.UserAdapterPaging;
 import com.ahmedabdelmeged.githubarch.databinding.ActivityUsersBinding;
 
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
+import timber.log.Timber;
 
 public class UsersActivity extends DaggerAppCompatActivity {
 
@@ -24,37 +24,25 @@ public class UsersActivity extends DaggerAppCompatActivity {
     @Inject
     UserAdapter userAdapter;
 
-    private ActivityUsersBinding activityUsersBinding;
-    private UsersViewModel usersViewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityUsersBinding = DataBindingUtil.setContentView(this, R.layout.activity_users);
-        usersViewModel = ViewModelProviders.of(this, viewModelFactory).get(UsersViewModel.class);
-        initUsersRecyclerView();
-
-        AutoCompositeDisposable compositeDisposable = new AutoCompositeDisposable(this);
-        usersViewModel.getUsersLiveData().observe(this, users -> compositeDisposable.add(userAdapter.updateUsers(users)));
-    }
-
-    private void initUsersRecyclerView() {
+        ActivityUsersBinding activityUsersBinding = DataBindingUtil.setContentView(this, R.layout.activity_users);
+        UsersViewModel usersViewModel = ViewModelProviders.of(this, viewModelFactory).get(UsersViewModel.class);
+        //initUsersRecyclerView();
         activityUsersBinding.usersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         activityUsersBinding.usersRecyclerView.setHasFixedSize(true);
-        activityUsersBinding.usersRecyclerView.setAdapter(userAdapter);
+        UserAdapterPaging userAdapterPaging = new UserAdapterPaging();
 
-        activityUsersBinding.usersRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                LinearLayoutManager layoutManager = (LinearLayoutManager)
-                        recyclerView.getLayoutManager();
-                int lastPosition = layoutManager
-                        .findLastVisibleItemPosition();
-                if (lastPosition == userAdapter.getItemCount() - 1) {
-                    usersViewModel.loadNextPage();
-                }
-            }
+        usersViewModel.userList.observe(this, users -> {
+            userAdapterPaging.setList(users);
+            Timber.e(userAdapterPaging.getCurrentList().toString());
+            Timber.e("I'm observing");
         });
+
+        usersViewModel.getUsersLiveData().observe(this, userAdapter::updateUsers);
+
+        activityUsersBinding.usersRecyclerView.setAdapter(userAdapterPaging);
     }
 
 }
