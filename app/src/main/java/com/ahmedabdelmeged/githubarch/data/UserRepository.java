@@ -12,7 +12,6 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -54,7 +53,7 @@ public class UserRepository {
 
     private Single<List<User>> getAndMapUsers(Single<List<UserRaw>> userRawList) {
         return userRawList.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.computation())
                 .flatMapObservable(Observable::fromIterable)
                 .map(userMapper)
                 .toList();

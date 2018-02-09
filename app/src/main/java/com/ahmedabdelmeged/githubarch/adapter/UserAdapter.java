@@ -1,43 +1,25 @@
 package com.ahmedabdelmeged.githubarch.adapter;
 
-
+import android.arch.paging.PagedListAdapter;
 import android.databinding.DataBindingUtil;
-import android.support.annotation.NonNull;
-import android.support.v7.util.DiffUtil;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.ahmedabdelmeged.githubarch.R;
-import com.ahmedabdelmeged.githubarch.common.AndroidPreconditions;
 import com.ahmedabdelmeged.githubarch.databinding.ItemUserBinding;
 import com.ahmedabdelmeged.githubarch.model.User;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 /**
- * Created by Ahmed Abd-Elmeged on 2/7/2018.
+ * Created by Ahmed Abd-Elmeged on 2/8/2018.
  */
-public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> {
-
-    @NonNull
-    private List<User> users = new ArrayList<>();
-
-    @NonNull
-    private AndroidPreconditions androidPreconditions;
+public class UserAdapter extends PagedListAdapter<User, UserViewHolder> {
 
     @Inject
-    public UserAdapter(@NonNull AndroidPreconditions androidPreconditions) {
-        this.androidPreconditions = androidPreconditions;
+    public UserAdapter(UserDiffCallback userDiffCallback) {
+        super(userDiffCallback);
     }
 
     @Override
@@ -49,54 +31,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> {
 
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
-        holder.bind(users.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
-        return users.size();
-    }
-
-    /**
-     * Updates current users stored users in the adapter with new users
-     *
-     * @param users the new users from api
-     */
-    public Disposable updateUsers(@NonNull final List<User> users) {
-        androidPreconditions.assertUiThread();
-
-        if (this.users.isEmpty()) {
-            return updateAllUsers(users);
-        } else {
-            return updateDiffUsersOnly(users);
-        }
-    }
-
-    /**
-     * Only use for the first update of the adapter, whe it is still empty.
-     */
-    private Disposable updateAllUsers(@NonNull final List<User> users) {
-        return Single.just(users)
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSuccess(this::updateItemsInModel)
-                .subscribe(__ -> notifyDataSetChanged());
-    }
-
-    /**
-     * Do not use for first update of the adapter. The method {@link DiffUtil.DiffResult#dispatchUpdatesTo(RecyclerView.Adapter)}
-     * is significantly slower than {@link UserAdapter#notifyDataSetChanged()}
-     * when it comes to update all the items in the adapter.
-     */
-    private Disposable updateDiffUsersOnly(@NonNull final List<User> users) {
-        return Single.fromCallable(() -> DiffUtil.calculateDiff(new UserDiffCallback(this.users, users)))
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSuccess(__ -> updateItemsInModel(users))
-                .subscribe(diffResult -> diffResult.dispatchUpdatesTo(this));
-    }
-
-    private void updateItemsInModel(@NonNull final List<User> users) {
-        this.users.addAll(users);
+        holder.bind(getItem(position));
     }
 
 }

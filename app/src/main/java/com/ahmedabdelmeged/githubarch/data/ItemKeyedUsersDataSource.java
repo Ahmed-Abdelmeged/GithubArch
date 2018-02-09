@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 
 import com.ahmedabdelmeged.githubarch.model.User;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
@@ -25,12 +24,7 @@ public class ItemKeyedUsersDataSource extends ItemKeyedDataSource<Long, User> {
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Long> params, @NonNull LoadInitialCallback<User> callback) {
-        Timber.e("init request");
-        compositeDisposable.add(userRepository.fetchUsers().subscribe(users -> {
-                    Timber.e("hey the data arrived");
-                    Timber.e(Thread.currentThread().getName());
-                    callback.onResult(users);
-                },
+        compositeDisposable.add(userRepository.fetchUsers().subscribe(callback::onResult,
                 throwable -> Timber.e(throwable.getMessage())));
     }
 
@@ -50,4 +44,5 @@ public class ItemKeyedUsersDataSource extends ItemKeyedDataSource<Long, User> {
     public Long getKey(@NonNull User item) {
         return item.id();
     }
+
 }

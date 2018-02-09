@@ -1,7 +1,6 @@
 package com.ahmedabdelmeged.githubarch.data;
 
 
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.paging.DataSource;
 
 import com.ahmedabdelmeged.githubarch.model.User;
@@ -14,10 +13,6 @@ public class GitHubUserDataSourceFactory implements DataSource.Factory<Long, Use
 
     private CompositeDisposable compositeDisposable;
 
-
-    MutableLiveData<ItemKeyedUsersDataSource> mutableLiveData;
-
-
     public GitHubUserDataSourceFactory(UserRepository userRepository, CompositeDisposable compositeDisposable) {
         this.userRepository = userRepository;
         this.compositeDisposable = compositeDisposable;
@@ -26,10 +21,6 @@ public class GitHubUserDataSourceFactory implements DataSource.Factory<Long, Use
     @Override
     public DataSource<Long, User> create() {
         return new ItemKeyedUsersDataSource(userRepository, compositeDisposable);
-    }
-
-    public MutableLiveData<ItemKeyedUsersDataSource> getMutableLiveData() {
-        return mutableLiveData;
     }
 
 }
