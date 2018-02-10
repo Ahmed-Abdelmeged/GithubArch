@@ -10,11 +10,16 @@
             name="user"
             type="com.ahmedabdelmeged.githubarch.model.User" />
 
+        <variable
+            name="userClickHandler"
+            type="com.ahmedabdelmeged.githubarch.adapter.UserClickHandler" />
+
     </data>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="70dp"
+        android:onClick="@{(view)-> userClickHandler.onUserClicked(user)}"
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="4dp"
         card_view:cardUseCompatPadding="true">

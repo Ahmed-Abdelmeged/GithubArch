@@ -13,12 +13,13 @@ public class UserViewHolder extends RecyclerView.ViewHolder {
 
     private final ItemUserBinding binding;
 
-    UserViewHolder(ItemUserBinding binding) {
+    UserViewHolder(ItemUserBinding binding, UserClickHandler userClickHandler) {
         super(binding.getRoot());
         this.binding = binding;
+        this.binding.setUserClickHandler(userClickHandler);
     }
 
-    public void bind(User user){
+    public void bind(User user) {
         binding.setUser(user);
         binding.executePendingBindings();
     }
