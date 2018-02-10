@@ -1,4 +1,4 @@
-package com.ahmedabdelmeged.githubarch.data;
+package com.ahmedabdelmeged.githubarch.api;
 
 import com.ahmedabdelmeged.githubarch.model.UserRaw;
 

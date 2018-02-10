@@ -1,4 +1,4 @@
-package com.ahmedabdelmeged.githubarch.di.module;
+package com.ahmedabdelmeged.githubarch.di.module.user;
 
 import com.ahmedabdelmeged.githubarch.adapter.UserAdapter;
 import com.ahmedabdelmeged.githubarch.adapter.UserDiffCallback;
@@ -14,7 +14,7 @@ import dagger.Provides;
 public class UsersActivityModule {
 
     @Provides
-    public UserAdapter provideUserAdapter(UserDiffCallback userDiffCallback) {
+    static UserAdapter provideUserAdapter(UserDiffCallback userDiffCallback) {
         return new UserAdapter(userDiffCallback);
     }
 

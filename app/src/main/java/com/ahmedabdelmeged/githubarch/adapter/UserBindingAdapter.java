@@ -16,7 +16,7 @@ public final class UserBindingAdapter {
     private UserBindingAdapter() {
     }
 
-    @BindingAdapter("app:avatarUrl")
+    @BindingAdapter("avatarUrl")
     public static void setUserAvatar(ImageView view, final String url) {
         GlideApp.with(view.getContext())
                 .load(url)
@@ -25,7 +25,7 @@ public final class UserBindingAdapter {
                 .into(view);
     }
 
-    @BindingAdapter("app:visibility")
+    @BindingAdapter("visibility")
     public static void setSiteAdminVisibility(ImageView view, boolean isSiteAdmin) {
         view.setVisibility(isSiteAdmin ? View.VISIBLE : View.GONE);
     }

@@ -93,7 +93,7 @@ public abstract class UserRaw {
 
         Builder id(final long id);
 
-        Builder avatarUrl(final String avaterUrl);
+        Builder avatarUrl(final String avatarUrl);
 
         Builder gravatarId(final String gravatarId);
 

@@ -1,4 +1,4 @@
-package com.ahmedabdelmeged.githubarch.data;
+package com.ahmedabdelmeged.githubarch.api;
 
 import com.ahmedabdelmeged.githubarch.common.AutoValueGson_GithubTypeAdapterFactory;
 import com.google.gson.Gson;

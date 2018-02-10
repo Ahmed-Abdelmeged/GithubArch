@@ -1,5 +1,6 @@
 package com.ahmedabdelmeged.githubarch.di.module;
 
+import com.ahmedabdelmeged.githubarch.di.module.user.UsersActivityModule;
 import com.ahmedabdelmeged.githubarch.di.scops.PerActivity;
 import com.ahmedabdelmeged.githubarch.ui.UsersActivity;
 

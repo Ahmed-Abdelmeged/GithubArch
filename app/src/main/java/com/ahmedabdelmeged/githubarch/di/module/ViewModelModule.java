@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProvider;
 
 import com.ahmedabdelmeged.githubarch.common.GithubViewModelFactory;
 import com.ahmedabdelmeged.githubarch.di.ViewModelKey;
+import com.ahmedabdelmeged.githubarch.di.module.user.UserViewModelModule;
 import com.ahmedabdelmeged.githubarch.ui.UsersViewModel;
 
 import dagger.Binds;
@@ -15,7 +16,7 @@ import dagger.multibindings.IntoMap;
  * Created by Ahmed Abd-Elmeged on 2/5/2018.
  */
 
-@Module
+@Module(includes = UserViewModelModule.class)
 public abstract class ViewModelModule {
 
     @Binds

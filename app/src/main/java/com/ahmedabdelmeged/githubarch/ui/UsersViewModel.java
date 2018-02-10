@@ -2,17 +2,15 @@ package com.ahmedabdelmeged.githubarch.ui;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
-import android.arch.paging.LivePagedListBuilder;
 import android.arch.paging.PagedList;
 import android.support.annotation.NonNull;
 
-import com.ahmedabdelmeged.githubarch.data.GitHubUserDataSourceFactory;
-import com.ahmedabdelmeged.githubarch.data.UserRepository;
+import com.ahmedabdelmeged.githubarch.repository.Listing;
+import com.ahmedabdelmeged.githubarch.repository.NetworkState;
+import com.ahmedabdelmeged.githubarch.repository.UsersRepository;
 import com.ahmedabdelmeged.githubarch.model.User;
 
 import javax.inject.Inject;
-
-import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by Ahmed Abd-Elmeged on 2/4/2018.
@@ -20,30 +18,41 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class UsersViewModel extends ViewModel {
 
-    @NonNull
-    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
-
     public LiveData<PagedList<User>> userList;
 
-    private static final int pageSize = 15;
+    @NonNull
+    private final UsersRepository usersRepository;
+
+    @NonNull
+    private Listing<User> userListing;
 
     @Inject
-    UsersViewModel(@NonNull UserRepository userRepository) {
-        GitHubUserDataSourceFactory gitHubUserDataSourceFactory = new GitHubUserDataSourceFactory(userRepository, compositeDisposable);
+    UsersViewModel(@NonNull UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
+        userListing = usersRepository.fetchUsers();
+        userList = userListing.getPagedList();
+    }
 
-        PagedList.Config config = new PagedList.Config.Builder()
-                .setPageSize(pageSize)
-                .setInitialLoadSizeHint(pageSize * 2)
-                .setEnablePlaceholders(false)
-                .build();
+    public void retry() {
+        usersRepository.retry();
+    }
 
-        userList = new LivePagedListBuilder<>(gitHubUserDataSourceFactory, config).build();
+    public void refresh() {
+        usersRepository.refresh();
+    }
+
+    public LiveData<NetworkState> getNetworkState() {
+        return userListing.getNetworkState();
+    }
+
+    public LiveData<NetworkState> getRefreshState() {
+        return userListing.getRefreshState();
     }
 
     @Override
     protected void onCleared() {
         super.onCleared();
-        compositeDisposable.dispose();
+        usersRepository.getCompositeDisposable().dispose();
     }
 
 }

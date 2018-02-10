@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.ahmedabdelmeged.githubarch.R;
 import com.ahmedabdelmeged.githubarch.databinding.ItemUserBinding;
 import com.ahmedabdelmeged.githubarch.model.User;
+import com.ahmedabdelmeged.githubarch.repository.NetworkState;
 
 import javax.inject.Inject;
 
@@ -32,6 +33,10 @@ public class UserAdapter extends PagedListAdapter<User, UserViewHolder> {
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
         holder.bind(getItem(position));
+    }
+
+    public void setNetworkState(NetworkState networkState){
+
     }
 
 }

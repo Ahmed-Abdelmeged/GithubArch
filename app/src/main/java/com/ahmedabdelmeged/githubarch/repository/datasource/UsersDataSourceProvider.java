@@ -1,35 +1,32 @@
-package com.ahmedabdelmeged.githubarch.data;
+package com.ahmedabdelmeged.githubarch.repository.datasource;
 
 import android.support.annotation.NonNull;
 
+import com.ahmedabdelmeged.githubarch.api.GithubService;
 import com.ahmedabdelmeged.githubarch.model.User;
 import com.ahmedabdelmeged.githubarch.model.UserMapper;
 import com.ahmedabdelmeged.githubarch.model.UserRaw;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Created by Ahmed Abd-Elmeged on 2/4/2018.
+ * Created by Ahmed Abd-Elmeged on 2/10/2018.
  */
-
-public class UserRepository {
-
-    @NonNull
-    private final UserMapper userMapper;
+public class UsersDataSourceProvider {
 
     @NonNull
     private final GithubService githubService;
 
-    @Inject
-    public UserRepository(@NonNull UserMapper userMapper, @NonNull GithubService githubService) {
-        this.userMapper = userMapper;
+    @NonNull
+    private final UserMapper userMapper;
+
+    public UsersDataSourceProvider(@NonNull GithubService githubService, @NonNull UserMapper userMapper) {
         this.githubService = githubService;
+        this.userMapper = userMapper;
     }
 
     /**
@@ -37,7 +34,7 @@ public class UserRepository {
      *
      * @return list of users
      */
-    public Single<List<User>> fetchUsers() {
+    Single<List<User>> fetchUsers() {
         return getAndMapUsers(githubService.getUsers());
     }
 
@@ -47,7 +44,7 @@ public class UserRepository {
      * @param userId the user id to get the users after
      * @return list of users
      */
-    public Single<List<User>> fetchNextPageUsers(long userId) {
+    Single<List<User>> fetchNextPageUsers(long userId) {
         return getAndMapUsers(githubService.getUsers(userId));
     }
 

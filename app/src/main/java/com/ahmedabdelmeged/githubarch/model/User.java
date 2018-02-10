@@ -44,7 +44,7 @@ public abstract class User {
 
         Builder id(final long id);
 
-        Builder avatarUrl(final String avaterUrl);
+        Builder avatarUrl(final String avatarUrl);
 
         Builder url(final String url);
 

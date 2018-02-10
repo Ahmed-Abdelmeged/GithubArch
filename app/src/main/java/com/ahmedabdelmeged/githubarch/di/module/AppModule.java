@@ -1,11 +1,9 @@
 package com.ahmedabdelmeged.githubarch.di.module;
 
 import com.ahmedabdelmeged.githubarch.BuildConfig;
-import com.ahmedabdelmeged.githubarch.data.GithubService;
-import com.ahmedabdelmeged.githubarch.data.GithubServiceFactory;
-import com.ahmedabdelmeged.githubarch.data.UserRepository;
+import com.ahmedabdelmeged.githubarch.api.GithubService;
+import com.ahmedabdelmeged.githubarch.api.GithubServiceFactory;
 import com.ahmedabdelmeged.githubarch.di.scops.PerApplication;
-import com.ahmedabdelmeged.githubarch.model.UserMapper;
 
 import dagger.Module;
 import dagger.Provides;
@@ -19,14 +17,8 @@ public class AppModule {
 
     @Provides
     @PerApplication
-    GithubService provideGithubService() {
+    static GithubService provideGithubService() {
         return GithubServiceFactory.makeGithubService(BuildConfig.DEBUG);
-    }
-
-    @Provides
-    @PerApplication
-    UserRepository provideUsersRepository(GithubService githubService, UserMapper userMapper) {
-        return new UserRepository(userMapper, githubService);
     }
 
 }
