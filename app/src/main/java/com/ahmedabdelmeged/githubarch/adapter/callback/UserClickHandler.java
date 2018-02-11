@@ -1,4 +1,4 @@
-package com.ahmedabdelmeged.githubarch.adapter;
+package com.ahmedabdelmeged.githubarch.adapter.callback;
 
 import android.app.Activity;
 import android.content.Intent;

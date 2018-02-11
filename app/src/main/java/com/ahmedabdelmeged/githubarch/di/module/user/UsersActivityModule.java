@@ -1,9 +1,8 @@
 package com.ahmedabdelmeged.githubarch.di.module.user;
 
 import com.ahmedabdelmeged.githubarch.adapter.UserAdapter;
-import com.ahmedabdelmeged.githubarch.adapter.UserClickHandler;
+import com.ahmedabdelmeged.githubarch.adapter.callback.UserClickHandler;
 import com.ahmedabdelmeged.githubarch.adapter.UserDiffCallback;
-import com.ahmedabdelmeged.githubarch.model.User;
 import com.ahmedabdelmeged.githubarch.ui.UsersActivity;
 
 import dagger.Module;

@@ -1,4 +1,4 @@
-package com.ahmedabdelmeged.githubarch.adapter;
+package com.ahmedabdelmeged.githubarch.adapter.binding;
 
 import android.databinding.BindingAdapter;
 import android.view.View;
@@ -26,8 +26,8 @@ public final class UserBindingAdapter {
     }
 
     @BindingAdapter("visibility")
-    public static void setSiteAdminVisibility(ImageView view, boolean isSiteAdmin) {
-        view.setVisibility(isSiteAdmin ? View.VISIBLE : View.GONE);
+    public static void setVisibility(View view, boolean isVisible) {
+        view.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 
 }

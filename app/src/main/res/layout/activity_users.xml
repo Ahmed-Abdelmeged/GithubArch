@@ -1,19 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/usersSwipeRefreshLayout"
+    <data>
+
+        <variable
+            name="retryCallback"
+            type="com.ahmedabdelmeged.githubarch.adapter.callback.RetryCallback" />
+
+        <variable
+            name="networkState"
+            type="com.ahmedabdelmeged.githubarch.repository.NetworkState" />
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/usersRecyclerView"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/usersSwipeRefreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            tools:listitem="@layout/item_user" />
+            android:layout_height="match_parent">
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/usersRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                tools:listitem="@layout/item_user" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <include
+            layout="@layout/item_network_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:callback="@{() -> retryCallback.retry()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/usersSwipeRefreshLayout"
+            app:networkState="@{networkState}" />
+
+    </android.support.constraint.ConstraintLayout>
 
 </layout>

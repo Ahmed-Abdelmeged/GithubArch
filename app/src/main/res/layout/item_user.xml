@@ -12,7 +12,7 @@
 
         <variable
             name="userClickHandler"
-            type="com.ahmedabdelmeged.githubarch.adapter.UserClickHandler" />
+            type="com.ahmedabdelmeged.githubarch.adapter.callback.UserClickHandler" />
 
     </data>
 
