@@ -5,7 +5,8 @@ This sample code that implement MVVM architecture using Android architecture com
 I create this repo for a few reasons:
 1. Help others to understand architecture component in sample way
 2. Understand paging library with RxJava
-2. To use as starting point for future projects
+3. To use as starting point for future projects
+4. Get feedback from other developers to improve my code
 
 ## Libraries and tools used
 * [Android Support Libraries](https://developer.android.com/topic/libraries/support-library/index.html)
@@ -64,6 +65,8 @@ This architecture is similar to what google used in [Guide to App Architecture](
 </a>
 
 But enhanced  with paging , RxJava2 and Databinding
+
+contribution to improve this architecture is open just make a PR :D
 
 ## TODO
 * Enable caching
