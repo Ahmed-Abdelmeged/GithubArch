@@ -18,6 +18,7 @@ import javax.inject.Inject;
 
 public class UsersViewModel extends ViewModel {
 
+    @NonNull
     public LiveData<PagedList<User>> userList;
 
     @NonNull
@@ -52,7 +53,7 @@ public class UsersViewModel extends ViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        usersRepository.getCompositeDisposable().dispose();
+        usersRepository.clear();
     }
 
 }

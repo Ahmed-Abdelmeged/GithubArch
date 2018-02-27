@@ -68,7 +68,6 @@ public class UsersDataSource extends ItemKeyedDataSource<Long, User> {
         }
     }
 
-
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Long> params, @NonNull LoadInitialCallback<User> callback) {
         // update network states.

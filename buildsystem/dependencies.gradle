@@ -10,12 +10,12 @@ ext {
     supportLibrary = '27.0.2'
     constraintLayout = '1.0.2'
     autoValue = '1.5.3'
-    timber = '4.6.0'
-    rxJava2 = '2.1.9'
-    rxAndroid = '2.0.1'
+    timber = '4.6.1'
+    rxJava2 = '2.1.10'
+    rxAndroid = '2.0.2'
     retrofit2 = "2.3.0"
     archLifecycle = '1.1.0'
-    okHttp = '3.9.0'
+    okHttp = '3.9.1'
     dagger = '2.14.1'
     autoValueGson = '0.7.0'
     glide = '4.6.1'
@@ -27,8 +27,8 @@ ext {
 
     // Testing
     junit = '4.12'
-    mockito = '2.13.0'
-    assertJ = '3.9.0'
+    mockito = '2.15.0'
+    assertJ = '3.9.1'
 
     commonDependencies = [
             supportAppCompatV7     : "com.android.support:appcompat-v7:${supportLibrary}",

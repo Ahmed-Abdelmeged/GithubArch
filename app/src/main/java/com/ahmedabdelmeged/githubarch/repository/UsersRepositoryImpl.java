@@ -33,7 +33,6 @@ public class UsersRepositoryImpl implements UsersRepository {
     @NonNull
     private final CompositeDisposable compositeDisposable;
 
-
     private static final int pageSize = 15;
 
     private UsersDataSourceFactory usersDataSourceFactory;
@@ -74,10 +73,9 @@ public class UsersRepositoryImpl implements UsersRepository {
         usersDataSourceFactory.getUsersDataSourceLiveData().getValue().invalidate();
     }
 
-    @NonNull
     @Override
-    public CompositeDisposable getCompositeDisposable() {
-        return compositeDisposable;
+    public void clear() {
+        compositeDisposable.dispose();
     }
 
 }

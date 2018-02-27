@@ -15,6 +15,6 @@ public interface UsersRepository {
 
     void refresh();
 
-    CompositeDisposable getCompositeDisposable();
+    void clear();
 
 }

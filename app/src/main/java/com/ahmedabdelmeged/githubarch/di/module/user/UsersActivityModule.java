@@ -3,7 +3,6 @@ package com.ahmedabdelmeged.githubarch.di.module.user;
 import com.ahmedabdelmeged.githubarch.adapter.UserAdapter;
 import com.ahmedabdelmeged.githubarch.adapter.callback.UserClickHandler;
 import com.ahmedabdelmeged.githubarch.adapter.UserDiffCallback;
-import com.ahmedabdelmeged.githubarch.ui.UsersActivity;
 
 import dagger.Module;
 import dagger.Provides;
@@ -14,12 +13,6 @@ import dagger.Provides;
 
 @Module
 public class UsersActivityModule {
-
-    @Provides
-    static UserClickHandler userClickHandler(UsersActivity usersActivity){
-        return new UserClickHandler(usersActivity);
-    }
-
 
     @Provides
     static UserAdapter provideUserAdapter(UserDiffCallback userDiffCallback, UserClickHandler userClickHandler) {

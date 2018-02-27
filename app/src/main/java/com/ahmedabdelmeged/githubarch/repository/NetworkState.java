@@ -35,6 +35,4 @@ public class NetworkState {
         return message;
     }
 
-
-
 }
