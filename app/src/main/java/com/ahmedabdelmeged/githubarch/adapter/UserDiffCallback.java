@@ -1,7 +1,7 @@
 package com.ahmedabdelmeged.githubarch.adapter;
 
 import android.support.annotation.NonNull;
-import android.support.v7.recyclerview.extensions.DiffCallback;
+import android.support.v7.util.DiffUtil;
 
 import com.ahmedabdelmeged.githubarch.model.User;
 
@@ -12,7 +12,7 @@ import javax.inject.Inject;
 /**
  * Created by Ahmed Abd-Elmeged on 2/7/2018.
  */
-public class UserDiffCallback extends DiffCallback<User> {
+public class UserDiffCallback extends DiffUtil.ItemCallback<User> {
 
     @Inject
     UserDiffCallback() {

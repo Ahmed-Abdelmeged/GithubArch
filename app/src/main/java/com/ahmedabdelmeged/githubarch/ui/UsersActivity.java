@@ -43,10 +43,9 @@ public class UsersActivity extends DaggerAppCompatActivity {
                 LinearLayoutManager.VERTICAL, false);
         activityUsersBinding.usersRecyclerView.setLayoutManager(linearLayoutManager);
         activityUsersBinding.usersRecyclerView.setAdapter(userAdapter);
-        usersViewModel.userList.observe(this, userAdapter::setList);
+        usersViewModel.userList.observe(this, userAdapter::submitList);
 
         usersViewModel.getNetworkState().observe(this, userAdapter::setNetworkState);
-
         userAdapter.setRetryCallback(() -> usersViewModel.retry());
     }
 
@@ -55,13 +54,9 @@ public class UsersActivity extends DaggerAppCompatActivity {
      */
     private void initSwipeToRefresh() {
         usersViewModel.getRefreshState().observe(this, networkState -> {
-            if (userAdapter.getCurrentList() != null) {
-                if (userAdapter.getCurrentList().size() > 0) {
-                    activityUsersBinding.usersSwipeRefreshLayout.setRefreshing(
-                            networkState.getStatus() == NetworkState.LOADING.getStatus());
-                } else {
-                    setInitialLoadingState(networkState);
-                }
+            if (userAdapter.getCurrentList() != null && userAdapter.getCurrentList().size() > 0) {
+                activityUsersBinding.usersSwipeRefreshLayout.setRefreshing(
+                        networkState.getStatus() == NetworkState.LOADING.getStatus());
             } else {
                 setInitialLoadingState(networkState);
             }

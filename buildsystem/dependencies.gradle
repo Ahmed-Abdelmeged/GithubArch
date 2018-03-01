@@ -7,7 +7,7 @@ allprojects {
 
 ext {
     // Libraries
-    supportLibrary = '27.0.2'
+    supportLibrary = '27.1.0'
     constraintLayout = '1.0.2'
     autoValue = '1.5.3'
     timber = '4.6.1'
@@ -19,7 +19,7 @@ ext {
     dagger = '2.14.1'
     autoValueGson = '0.7.0'
     glide = '4.6.1'
-    paging = '1.0.0-alpha5'
+    paging = '1.0.0-alpha6'
 
     // Instrumentation
     testRunner = '1.0.1'

@@ -1,6 +1,7 @@
 package com.ahmedabdelmeged.githubarch.adapter;
 
 import android.arch.paging.PagedListAdapter;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
@@ -32,8 +33,9 @@ public class UserAdapter extends PagedListAdapter<User, RecyclerView.ViewHolder>
         this.userClickHandler = userClickHandler;
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case R.layout.item_user:
                 return UserViewHolder.create(parent, userClickHandler);
@@ -45,7 +47,7 @@ public class UserAdapter extends PagedListAdapter<User, RecyclerView.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         switch (getItemViewType(position)) {
             case R.layout.item_user:
                 ((UserViewHolder) holder).bindTo(getItem(position));
