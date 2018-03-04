@@ -15,7 +15,7 @@ ext {
     rxAndroid = '2.0.2'
     retrofit2 = "2.3.0"
     archLifecycle = '1.1.0'
-    okHttp = '3.9.1'
+    okHttp = '3.10.0'
     dagger = '2.14.1'
     autoValueGson = '0.7.0'
     glide = '4.6.1'

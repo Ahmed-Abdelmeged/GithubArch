@@ -12,6 +12,8 @@ import com.ahmedabdelmeged.githubarch.model.UserMapper;
 import com.ahmedabdelmeged.githubarch.repository.datasource.UsersDataSource;
 import com.ahmedabdelmeged.githubarch.repository.datasource.UsersDataSourceFactory;
 
+import javax.inject.Inject;
+
 import io.reactivex.disposables.CompositeDisposable;
 
 /**
@@ -31,17 +33,16 @@ public class UsersRepositoryImpl implements UsersRepository {
     private final UserMapper userMapper;
 
     @NonNull
-    private final CompositeDisposable compositeDisposable;
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     private static final int pageSize = 15;
 
     private UsersDataSourceFactory usersDataSourceFactory;
 
-    public UsersRepositoryImpl(@NonNull GithubService githubService, @NonNull UserMapper userMapper,
-                               @NonNull CompositeDisposable compositeDisposable) {
+    @Inject
+    UsersRepositoryImpl(@NonNull GithubService githubService, @NonNull UserMapper userMapper) {
         this.githubService = githubService;
         this.userMapper = userMapper;
-        this.compositeDisposable = compositeDisposable;
     }
 
     @Override
